@@ -18,7 +18,8 @@ def nativeImage(
   extraArgs: Seq[String],
   output: String,
   mainClass: String, // FIXME Get from cp / manifest
-  useAssembly: Boolean = false
+  useAssembly: Boolean = false,
+  extraNativeImageOpts: Seq[String] = Nil
 ): Unit = {
 
   val cp =
@@ -71,7 +72,7 @@ def nativeImage(
       // "--jvm", "graalvm:19.3",
       // "--java-opt", s"-Xmx$memm",
       // "--fork",
-      "org.graalvm.nativeimage:svm-driver:19.3.1",
+      "org.graalvm.nativeimage:svm-driver:20.1.0",
       "--",
       "-cp", cp
     ) ++ extraNativeImageOpts ++ Seq(
@@ -91,12 +92,12 @@ def nativeImage(
       """security.provider.3=what.we.put.here.doesnt.matter.ButThisHasToBeOverridden
         |""".stripMargin.getBytes
     Util.withTmpFile("java.security.overrides-", ".properties", javaSecurityOverrides) { path =>
-      run(Seq(s"-J-Djava.security.properties=$path"), extraCsOpts)
+      run(s"-J-Djava.security.properties=$path" +: extraNativeImageOpts, extraCsOpts)
     }
   } else if (Util.os == "linux" && coursierLauncher.endsWith("cs"))
-    run(Nil, Seq("--java-opt", s"-Xmx$mem"))
+    run(extraNativeImageOpts, Seq("--java-opt", s"-Xmx$mem"))
   else
-    run(Nil)
+    run(extraNativeImageOpts)
 }
 
 /**

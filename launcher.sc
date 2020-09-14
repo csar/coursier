@@ -198,12 +198,14 @@ def generateNativeImage(
       Seq(
         "-r", "central",
         "-r", "typesafe:ivy-releases",
+        "org.scalameta::svm-subs:20.1.0"
       ),
     output = output,
     mainClass = "coursier.cli.Coursier",
     // sometimes getting command-too-long errors when starting native-image
     // with the full classpath, without this
-    useAssembly = Util.os == "win"
+    useAssembly = Util.os == "win",
+    extraNativeImageOpts = Seq("--report-unsupported-elements-at-runtime")
   )
 }
 
