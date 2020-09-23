@@ -52,13 +52,13 @@ jobs:
       script: sbt +publishLocal ci-release
 
     - stage: upload-jar-launchers
-      env: TRAVIS_TAG=v2.0.0-RC6-26
+      env: TRAVIS_TAG=v2.0.0-RC6-24
       script: amm-runner launcher.sc uploadAllJars
     - stage: upload-native-launchers
       name: "Push Linux native image"
       before_script: source scripts/shared/setup-graalvm.sh
       script: amm-runner launcher.sc uploadNativeImage
-      env: TRAVIS_TAG=v2.0.0-RC6-26
+      env: TRAVIS_TAG=v2.0.0-RC6-24
     - stage: upload-native-launchers
       name: "Push mac native image"
       os: osx
@@ -66,14 +66,14 @@ jobs:
       jdk: openjdk9
       before_script: source scripts/shared/setup-graalvm.sh
       script: amm-runner launcher.sc uploadNativeImage
-      env: TRAVIS_TAG=v2.0.0-RC6-26
+      env: TRAVIS_TAG=v2.0.0-RC6-24
     - stage: upload-native-launchers
       name: "Push Windows native image"
       os: windows
       language: bash
       before_script: source scripts/shared/setup-graalvm.sh
       script: gpg --version && amm-runner.bat launcher.sc signDummyFiles && scripts/windows-native-image.bat && gpgconf --kill gpg-agent
-      env: TRAVIS_TAG=v2.0.0-RC6-26
+      env: TRAVIS_TAG=v2.0.0-RC6-24
     - stage: update-brew-formula
       script: scripts/update-brew-formula.sh
     - stage: update-website
