@@ -21,7 +21,7 @@ stages:
   - name: release
     if: branch = master
   - name: upload-jar-launchers
-    if: branch = tweak-ci
+    if: branch = master
   - name: upload-native-launchers
     if: branch = tweak-ci
   - name: update-brew-formula
