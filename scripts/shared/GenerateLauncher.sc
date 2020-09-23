@@ -63,7 +63,7 @@ def nativeImage(
     if (Util.os == "linux") "3584m"
     else "3g"
 
-  val graalvmVer = sys.env.getOrElse("GRAALVM_VERSION", "20.1.0")
+  val graalvmVer = if (Util.os == "win") "19.3.1" else "20.1.0"
 
   def run(extraNativeImageOpts: Seq[String], extraCsLaunchOpts: Seq[String] = Nil): Unit = {
 
