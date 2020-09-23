@@ -1,4 +1,6 @@
 
+// Ammonite 2.1.4-11-307f3d8, scala 2.12.12
+
 import $file.scripts.shared.GenerateLauncher
 import $file.scripts.shared.Sign
 import $file.scripts.shared.UploadGhRelease

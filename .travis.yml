@@ -54,24 +54,24 @@ jobs:
       script: sbt +publishLocal ci-release
 
     - stage: upload-jar-launchers
-      script: amm launcher.sc uploadAllJars
+      script: amm-runner launcher.sc uploadAllJars
     - stage: upload-native-launchers
       name: "Push Linux native image"
       before_script: source scripts/shared/setup-graalvm.sh
-      script: amm launcher.sc uploadNativeImage
+      script: amm-runner launcher.sc uploadNativeImage
     - stage: upload-native-launchers
       name: "Push mac native image"
       os: osx
       osx_image: xcode9.4
       jdk: openjdk9
       before_script: source scripts/shared/setup-graalvm.sh
-      script: amm launcher.sc uploadNativeImage
+      script: amm-runner launcher.sc uploadNativeImage
     - stage: upload-native-launchers
       name: "Push Windows native image"
       os: windows
       language: bash
       before_script: source scripts/shared/setup-graalvm.sh
-      script: gpg --version && amm.bat launcher.sc signDummyFiles && scripts/windows-native-image.bat && gpgconf --kill gpg-agent
+      script: gpg --version && amm-runner.bat launcher.sc signDummyFiles && scripts/windows-native-image.bat && gpgconf --kill gpg-agent
     - stage: update-brew-formula
       script: scripts/update-brew-formula.sh
     - stage: update-website
@@ -79,7 +79,7 @@ jobs:
       script:
         - npm install
         - export PATH="$PATH:$(pwd)/node_modules/bower/bin"
-        - amm website.sc updateWebsite
+        - amm-runner website.sc updateWebsite
 # Only build if: master branch, a tag, or a fork
 if: branch = tweak-ci
     OR tag IS present
