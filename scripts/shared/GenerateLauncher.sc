@@ -62,11 +62,12 @@ def nativeImage(
     if (Util.os == "linux") "3584m"
     else "3g"
 
-  def run(extraNativeImageOpts: String*): Unit = {
+  def run(extraNativeImageOpts: Seq[String], extraCsLaunchOpts: Seq[String] = Nil): Unit = {
 
     val cmd = Seq(
       coursierLauncher,
-      "launch",
+      "launch"
+    ) ++ extraCsLaunchOpts ++ Seq(
       // "--jvm", "graalvm:19.3",
       // "--java-opt", s"-Xmx$memm",
       // "--fork",
@@ -84,17 +85,18 @@ def nativeImage(
   }
 
   if (Util.os == "win") {
+    val extraCsOpts = if (coursierLauncher.endsWith("cs") || coursierLauncher.endsWith("cs.bat") || coursierLauncher.endsWith("cs.exe")) Seq("--java-opt", s"-Xmx$mem") else Nil
     // getting weird TLS-related linking errors without this
     val javaSecurityOverrides =
       """security.provider.3=what.we.put.here.doesnt.matter.ButThisHasToBeOverridden
         |""".stripMargin.getBytes
     Util.withTmpFile("java.security.overrides-", ".properties", javaSecurityOverrides) { path =>
-      run(s"-J-Djava.security.properties=$path")
+      run(Seq(s"-J-Djava.security.properties=$path"), extraCsOpts)
     }
   } else if (Util.os == "linux" && coursierLauncher.endsWith("cs"))
-    run("--java-opt", s"-Xmx$mem")
+    run(Nil, Seq("--java-opt", s"-Xmx$mem"))
   else
-    run()
+    run(Nil)
 }
 
 /**
