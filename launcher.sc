@@ -189,7 +189,7 @@ def generateNativeImage(
   output: String = "./cs",
   allowIvy2Local: Boolean = true
 ): Unit = {
-  val initialLauncher0 = initialLauncher(None, None)
+  val initialLauncher0 = sys.env.getOrElse("CS", initialLauncher(None, None))
   GenerateLauncher.nativeImage(
     initialLauncher0,
     module = s"io.get-coursier::coursier-cli:$version",

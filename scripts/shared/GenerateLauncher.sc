@@ -91,7 +91,9 @@ def nativeImage(
     Util.withTmpFile("java.security.overrides-", ".properties", javaSecurityOverrides) { path =>
       run(s"-J-Djava.security.properties=$path")
     }
-  } else
+  } else if (Util.os == "linux" && coursierLauncher.endsWith("cs"))
+    run("--java-opt", s"-Xmx$mem")
+  else
     run()
 }
 
