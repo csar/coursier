@@ -52,7 +52,7 @@ jobs:
 
     - stage: upload-jar-launchers
       env: TRAVIS_TAG=v2.0.0-RC6-24
-      script: amm-runner launcher.sc uploadAllJars
+      script: amm launcher.sc uploadAllJars
     - stage: upload-native-launchers
       name: "Push Linux native image"
       before_install: source scripts/ci-setup.sh --jvm graalvm-ce-java8:19.3.1
@@ -64,14 +64,13 @@ jobs:
       osx_image: xcode9.4
       jdk: openjdk9
       before_install: true
-      script: source scripts/ci-setup.sh --jvm graalvm-ce-java8:19.3.1 && java -version && which java && JAVA_OPTS="-Xmx256m" amm-runner launcher.sc uploadNativeImage
+      script: source scripts/ci-setup.sh --jvm graalvm-ce-java8:19.3.1 && java -version && which java && JAVA_OPTS="-Xmx256m" amm launcher.sc uploadNativeImage
       env: TRAVIS_TAG=v2.0.0-RC6-24
     - stage: upload-native-launchers
       name: "Push Windows native image"
       os: windows
       language: bash
-      before_install: source scripts/ci-setup.sh --jvm graalvm-ce-java8:19.3.1
-      script: gpg --version && JAVA_OPTS="-Xmx256m" amm-runner launcher.sc signDummyFiles && scripts/windows-native-image.bat && gpgconf --kill gpg-agent
+      before_install: source scripts/ci-setup.sh --jvm graalvm-ce-java8:19.3.1 && gpg --version && JAVA_OPTS="-Xmx256m" amm launcher.sc signDummyFiles && scripts/windows-native-image.bat && gpgconf --kill gpg-agent
       env: TRAVIS_TAG=v2.0.0-RC6-24
     - stage: update-brew-formula
       script: scripts/update-brew-formula.sh
@@ -80,7 +79,7 @@ jobs:
       script:
         - npm install
         - export PATH="$PATH:$(pwd)/node_modules/bower/bin"
-        - amm-runner website.sc updateWebsite
+        - amm website.sc updateWebsite
 # Only build if: master branch, a tag, or a fork
 if: branch = tweak-ci
     OR tag IS present
