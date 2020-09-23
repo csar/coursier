@@ -71,7 +71,9 @@ jobs:
       os: windows
       language: bash
       before_install: source scripts/ci-setup.sh --jvm graalvm-ce-java8:19.3.1 && gpg --version && JAVA_OPTS="-Xmx384m" bin/amm.bat launcher.sc signDummyFiles && scripts/windows-native-image.bat && gpgconf --kill gpg-agent
-      env: TRAVIS_TAG=v2.0.0-RC6-24
+      env:
+        - TRAVIS_TAG=v2.0.0-RC6-24
+        - CS=bin/cs.bat
     - stage: update-brew-formula
       script: scripts/update-brew-formula.sh
     - stage: update-website
