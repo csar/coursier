@@ -56,7 +56,7 @@ jobs:
     - stage: upload-native-launchers
       name: "Push Linux native image"
       before_install: source scripts/ci-setup.sh --jvm graalvm-ce-java8:19.3.1
-      script: CS="$(which cs)" JAVA_OPTS="-Xmx256m" amm launcher.sc uploadNativeImage
+      script: CS="$(which cs)" JAVA_OPTS="-Xmx384m" amm launcher.sc uploadNativeImage
       env: TRAVIS_TAG=v2.0.0-RC6-24
     - stage: upload-native-launchers
       name: "Push mac native image"
@@ -64,13 +64,13 @@ jobs:
       osx_image: xcode9.4
       jdk: openjdk9
       before_install: true
-      script: source scripts/ci-setup.sh --jvm graalvm-ce-java8:19.3.1 && java -version && which java && JAVA_OPTS="-Xmx256m" amm launcher.sc uploadNativeImage
+      script: source scripts/ci-setup.sh --jvm graalvm-ce-java8:19.3.1 && java -version && which java && JAVA_OPTS="-Xmx384m" amm launcher.sc uploadNativeImage
       env: TRAVIS_TAG=v2.0.0-RC6-24
     - stage: upload-native-launchers
       name: "Push Windows native image"
       os: windows
       language: bash
-      before_install: source scripts/ci-setup.sh --jvm graalvm-ce-java8:19.3.1 && gpg --version && JAVA_OPTS="-Xmx256m" bin/amm.bat launcher.sc signDummyFiles && scripts/windows-native-image.bat && gpgconf --kill gpg-agent
+      before_install: source scripts/ci-setup.sh --jvm graalvm-ce-java8:19.3.1 && gpg --version && JAVA_OPTS="-Xmx384m" bin/amm.bat launcher.sc signDummyFiles && scripts/windows-native-image.bat && gpgconf --kill gpg-agent
       env: TRAVIS_TAG=v2.0.0-RC6-24
     - stage: update-brew-formula
       script: scripts/update-brew-formula.sh
