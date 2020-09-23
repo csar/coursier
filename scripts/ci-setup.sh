@@ -19,6 +19,9 @@ if [ "$1" == "--jvm" ]; then
   eval "$(./cs java --env --jvm "$JVM")"
   echo "::set-env name=JAVA_HOME::$JAVA_HOME"
   echo "::add-path::$JAVA_HOME/bin"
+  if [ "$(uname)" == "Darwin" ]; then
+    export PATH="$JAVA_HOME/bin:$PATH"
+  fi
 fi
 
 rm -f cs cs.exe
