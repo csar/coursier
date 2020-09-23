@@ -8,9 +8,9 @@ import $file.scripts.shared.Version
 import $file.scripts.shared.WaitForSync
 
 
-private def ghToken() = Option(System.getenv("GH_TOKEN")).getOrElse {
+private def ghToken() = None /* Option(System.getenv("GH_TOKEN")).getOrElse {
   sys.error("GH_TOKEN not set")
-}
+}*/
 
 
 private def initialLauncher(
@@ -49,7 +49,7 @@ private def initialLauncher(
 private val pgpPassphrase = Option(System.getenv("PGP_PASSPHRASE"))
 private val pgpSecret = Option(System.getenv("PGP_SECRET"))
 
-private val dryRun = false
+private val dryRun = true
 
 @main
 def uploadJavaLauncher(): Unit = {

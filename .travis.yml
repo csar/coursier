@@ -16,16 +16,19 @@ addons:
 
 stages:
   - name: test
+    if: branch = master
   - name: release-snapshot
     if: (branch = master AND type = push) AND (tag IS NOT present)
   - name: release
-    if: tag IS present
+    if: branch = master
   - name: upload-jar-launchers
-    if: tag IS present
+    if: branch = tweak-ci
+    env: TRAVIS_TAG=v2.0.0-RC6-26
   - name: upload-native-launchers
-    if: tag IS present
+    if: branch = tweak-ci
+    env: TRAVIS_TAG=v2.0.0-RC6-26
   - name: update-brew-formula
-    if: tag IS present
+    if: branch = master
   - name: update-website
     if: (branch = master AND type = push) OR (tag IS present)
 
@@ -78,7 +81,7 @@ jobs:
         - export PATH="$PATH:$(pwd)/node_modules/bower/bin"
         - amm website.sc updateWebsite
 # Only build if: master branch, a tag, or a fork
-if: branch = master
+if: branch = tweak-ci
     OR tag IS present
     OR repo != coursier/coursier
 cache:
