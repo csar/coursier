@@ -55,7 +55,7 @@ jobs:
       script: amm-runner launcher.sc uploadAllJars
     - stage: upload-native-launchers
       name: "Push Linux native image"
-      before_install: source scripts/ci-setup.sh --graalvm
+      before_install: source scripts/ci-setup.sh --jvm graalvm-ce-java8:19.3.1
       script: amm-runner launcher.sc uploadNativeImage
       env: TRAVIS_TAG=v2.0.0-RC6-24
     - stage: upload-native-launchers
@@ -63,15 +63,15 @@ jobs:
       os: osx
       osx_image: xcode9.4
       jdk: openjdk9
-      before_install: source scripts/ci-setup.sh --graalvm
-      script: amm-runner launcher.sc uploadNativeImage
+      before_install: source scripts/ci-setup.sh --jvm graalvm-ce-java8:19.3.1
+      script: java -version && which java && amm-runner launcher.sc uploadNativeImage
       env: TRAVIS_TAG=v2.0.0-RC6-24
     - stage: upload-native-launchers
       name: "Push Windows native image"
       os: windows
       language: bash
-      before_install: source scripts/ci-setup.sh --graalvm
-      script: gpg --version && amm-runner.bat launcher.sc signDummyFiles && scripts/windows-native-image.bat && gpgconf --kill gpg-agent
+      before_install: source scripts/ci-setup.sh --jvm graalvm-ce-java8:19.3.1
+      script: gpg --version && amm-runner launcher.sc signDummyFiles && scripts/windows-native-image.bat && gpgconf --kill gpg-agent
       env: TRAVIS_TAG=v2.0.0-RC6-24
     - stage: update-brew-formula
       script: scripts/update-brew-formula.sh

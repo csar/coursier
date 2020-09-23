@@ -14,8 +14,9 @@ mkdir -p bin
 export PATH="$(pwd)/bin:$PATH"
 echo "::add-path::$(pwd)/bin"
 
-if [ "$1" == "--graalvm" ]; then
-  eval "$(./cs java --env --jvm graalvm-ce-java8:19.3.1)"
+if [ "$1" == "--jvm" ]; then
+  JVM="$2"
+  eval "$(./cs java --env --jvm "$JVM")"
   echo "::set-env name=JAVA_HOME::$JAVA_HOME"
   echo "::add-path::$JAVA_HOME/bin"
 fi
