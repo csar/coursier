@@ -63,8 +63,8 @@ jobs:
       os: osx
       osx_image: xcode9.4
       jdk: openjdk9
-      before_install: source scripts/ci-setup.sh --jvm graalvm-ce-java8:19.3.1
-      script: java -version && which java && amm-runner launcher.sc uploadNativeImage
+      before_install: true
+      script: source scripts/ci-setup.sh --jvm graalvm-ce-java8:19.3.1 && java -version && which java && amm-runner launcher.sc uploadNativeImage
       env: TRAVIS_TAG=v2.0.0-RC6-24
     - stage: upload-native-launchers
       name: "Push Windows native image"
