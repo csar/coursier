@@ -63,6 +63,8 @@ def nativeImage(
     if (Util.os == "linux") "3584m"
     else "3g"
 
+  val graalvmVer = sys.env.getOrElse("GRAALVM_VERSION", "20.1.0")
+
   def run(extraNativeImageOpts: Seq[String], extraCsLaunchOpts: Seq[String] = Nil): Unit = {
 
     val cmd = Seq(
@@ -72,7 +74,7 @@ def nativeImage(
       // "--jvm", "graalvm:19.3",
       // "--java-opt", s"-Xmx$memm",
       // "--fork",
-      "org.graalvm.nativeimage:svm-driver:20.1.0",
+      s"org.graalvm.nativeimage:svm-driver:$graalvmVer",
       "--",
       "-cp", cp
     ) ++ extraNativeImageOpts ++ Seq(
