@@ -10,7 +10,7 @@ import $file.scripts.shared.Version
 import $file.scripts.shared.WaitForSync
 
 
-private def ghToken() = None /* Option(System.getenv("GH_TOKEN")).getOrElse {
+private def ghToken() = "" /* Option(System.getenv("GH_TOKEN")).getOrElse {
   sys.error("GH_TOKEN not set")
 }*/
 
