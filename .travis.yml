@@ -56,7 +56,7 @@ jobs:
     - stage: upload-native-launchers
       name: "Push Linux native image"
       before_install: source scripts/ci-setup.sh --jvm graalvm-ce-java8:19.3.1
-      script: JAVA_OPTS="-Xmx256m" amm-runner launcher.sc uploadNativeImage
+      script: JAVA_OPTS="-Xmx256m" amm launcher.sc uploadNativeImage
       env: TRAVIS_TAG=v2.0.0-RC6-24
     - stage: upload-native-launchers
       name: "Push mac native image"
